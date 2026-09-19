@@ -1,0 +1,228 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Bundled fonts ───────────────────────────────────────────── */
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/assets/fonts/SpaceGrotesk.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/assets/fonts/Satoshi.woff2") format("woff2");
+  font-weight: 300 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-weight: 100 800;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-display: "Space Grotesk";
+    --font-body: "Satoshi";
+    --font-mono: "JetBrains Mono";
+    --radius: 0.375rem;
+
+    /* Ledger Ink — light mode (daylight counter work) */
+    --background: 0.975 0.006 95;
+    --foreground: 0.19 0.018 165;
+    --card: 0.995 0.003 95;
+    --card-foreground: 0.19 0.018 165;
+    --popover: 0.995 0.003 95;
+    --popover-foreground: 0.19 0.018 165;
+
+    --primary: 0.42 0.11 165;
+    --primary-foreground: 0.98 0.006 165;
+
+    --secondary: 0.94 0.008 95;
+    --secondary-foreground: 0.28 0.02 165;
+    --muted: 0.94 0.008 95;
+    --muted-foreground: 0.5 0.015 165;
+
+    --accent: 0.62 0.13 78;
+    --accent-foreground: 0.19 0.02 78;
+
+    --destructive: 0.52 0.2 27;
+    --destructive-foreground: 0.98 0.006 27;
+
+    --success: 0.5 0.13 158;
+    --success-foreground: 0.98 0.006 158;
+
+    --warning: 0.7 0.14 78;
+    --warning-foreground: 0.19 0.02 78;
+
+    --border: 0.89 0.009 95;
+    --input: 0.89 0.009 95;
+    --ring: 0.42 0.11 165;
+
+    --chart-1: 0.46 0.11 165;
+    --chart-2: 0.64 0.13 78;
+    --chart-3: 0.52 0.09 220;
+    --chart-4: 0.6 0.12 40;
+    --chart-5: 0.55 0.08 300;
+
+    --sidebar: 0.955 0.009 95;
+    --sidebar-foreground: 0.19 0.018 165;
+    --sidebar-primary: 0.42 0.11 165;
+    --sidebar-primary-foreground: 0.98 0.006 165;
+    --sidebar-accent: 0.91 0.012 95;
+    --sidebar-accent-foreground: 0.24 0.02 165;
+    --sidebar-border: 0.88 0.009 95;
+    --sidebar-ring: 0.42 0.11 165;
+
+    /* Ledger-specific surfaces */
+    --paper: 0.99 0.004 95;
+    --rule: 0.86 0.012 95;
+    --ink-soft: 0.42 0.02 165;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.46 0.115 165),
+      oklch(0.38 0.1 172)
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.975 0.006 95),
+      oklch(0.955 0.009 95)
+    );
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    /* Ledger Ink — dark mode (lamplit bookkeeping, primary mode) */
+    --background: 0.155 0.014 168;
+    --foreground: 0.93 0.008 95;
+    --card: 0.195 0.016 168;
+    --card-foreground: 0.93 0.008 95;
+    --popover: 0.215 0.017 168;
+    --popover-foreground: 0.93 0.008 95;
+
+    --primary: 0.72 0.13 165;
+    --primary-foreground: 0.145 0.016 165;
+
+    --secondary: 0.235 0.018 168;
+    --secondary-foreground: 0.86 0.008 95;
+    --muted: 0.235 0.018 168;
+    --muted-foreground: 0.58 0.012 100;
+
+    --accent: 0.78 0.13 78;
+    --accent-foreground: 0.155 0.02 78;
+
+    --destructive: 0.62 0.19 25;
+    --destructive-foreground: 0.96 0.008 25;
+
+    --success: 0.72 0.14 158;
+    --success-foreground: 0.145 0.016 158;
+
+    --warning: 0.78 0.13 78;
+    --warning-foreground: 0.155 0.02 78;
+
+    --border: 0.29 0.018 168;
+    --input: 0.29 0.018 168;
+    --ring: 0.72 0.13 165;
+
+    --chart-1: 0.72 0.13 165;
+    --chart-2: 0.78 0.13 78;
+    --chart-3: 0.68 0.1 220;
+    --chart-4: 0.7 0.13 40;
+    --chart-5: 0.68 0.1 300;
+
+    --sidebar: 0.175 0.015 168;
+    --sidebar-foreground: 0.93 0.008 95;
+    --sidebar-primary: 0.72 0.13 165;
+    --sidebar-primary-foreground: 0.145 0.016 165;
+    --sidebar-accent: 0.245 0.02 168;
+    --sidebar-accent-foreground: 0.9 0.008 95;
+    --sidebar-border: 0.27 0.018 168;
+    --sidebar-ring: 0.72 0.13 165;
+
+    --paper: 0.185 0.015 168;
+    --rule: 0.3 0.02 168;
+    --ink-soft: 0.72 0.012 100;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.75 0.135 165),
+      oklch(0.68 0.12 172)
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.195 0.016 168),
+      oklch(0.165 0.014 168)
+    );
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  /* Signature: monospaced tabular money columns */
+  .ledger-figure {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1, "zero" 1;
+    letter-spacing: -0.01em;
+  }
+
+  /* Signature: ledger margin tick on status badges */
+  .ledger-tick {
+    position: relative;
+    padding-left: 0.7rem;
+  }
+  .ledger-tick::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.15em;
+    bottom: 0.15em;
+    width: 3px;
+    border-radius: 9999px;
+    background: currentColor;
+    opacity: 0.85;
+  }
+
+  /* Faint ruled-paper texture for document surfaces */
+  .ledger-ruled {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 31px,
+      oklch(var(--rule) / 0.55) 31px,
+      oklch(var(--rule) / 0.55) 32px
+    );
+  }
+
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+  .bg-gradient-subtle {
+    background-image: var(--gradient-subtle);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}

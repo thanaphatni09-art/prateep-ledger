@@ -1,0 +1,24 @@
+{
+  "overview": "A Thai-language credit-sales ledger where a shop manager tracks customers, products, invoices, payments, and debts, while customers sign in to view their own records and upload bank-transfer proof.",
+  "features": [
+    "Manager dashboard for customers, products, invoices, payments, and debts",
+    "Customer portal showing only that customer's own invoices, debts, payments, and receipts",
+    "Create invoices from a product catalog with automatic THB totals",
+    "Record manual payments and track outstanding balances per customer",
+    "Customers upload bank-transfer proof against the shop's bank details",
+    "Manager approves or rejects uploaded proofs and payment status updates",
+    "Thai-layout invoice, receipt, and debt-notice documents with print and save-as-PDF",
+    "In-app notifications for both manager and customers",
+    "Shop profile and bank details settings"
+  ],
+  "category": "business-management",
+  "tags": [
+    "invoicing",
+    "credit-ledger",
+    "commerce",
+    "thai",
+    "small-business",
+    "payments"
+  ],
+  "last_updated": "2026-09-19T12:49:29.653Z"
+}

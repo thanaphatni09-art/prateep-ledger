@@ -1,0 +1,167 @@
+/* ── Printable document sheet ──────────────────────────────────────
+   The document sheet always renders on light "paper" tokens, even when
+   the app runs in dark mode. Dark-mode paper wastes toner and reads
+   wrong on A4, so the sheet pins its own light palette here.
+   ───────────────────────────────────────────────────────────────── */
+
+.doc-sheet {
+  --doc-paper: oklch(0.995 0.003 95);
+  --doc-ink: oklch(0.19 0.018 165);
+  --doc-ink-soft: oklch(0.44 0.02 165);
+  --doc-rule: oklch(0.86 0.012 95);
+  --doc-rule-strong: oklch(0.72 0.014 95);
+  --doc-accent: oklch(0.42 0.11 165);
+  --doc-brass: oklch(0.62 0.13 78);
+
+  background-color: var(--doc-paper);
+  color: var(--doc-ink);
+  font-family: var(--font-body);
+  width: 100%;
+  max-width: 210mm;
+  margin-inline: auto;
+  padding: 14mm 16mm;
+  box-shadow: 0 1px 2px oklch(0 0 0 / 0.18), 0 18px 40px -24px
+    oklch(0 0 0 / 0.5);
+}
+
+.doc-sheet .doc-rule {
+  border-color: var(--doc-rule);
+}
+
+.doc-sheet .doc-rule-strong {
+  border-color: var(--doc-rule-strong);
+}
+
+.doc-sheet .doc-ink-soft {
+  color: var(--doc-ink-soft);
+}
+
+.doc-sheet .doc-accent {
+  color: var(--doc-accent);
+}
+
+.doc-sheet .doc-brass {
+  color: var(--doc-brass);
+}
+
+.doc-sheet .doc-figure {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "zero" 1;
+  letter-spacing: -0.01em;
+}
+
+.doc-sheet .doc-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--doc-ink-soft);
+}
+
+.doc-sheet .doc-title {
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+}
+
+.doc-sheet .doc-table-head {
+  background-color: oklch(0.955 0.008 95);
+  color: var(--doc-ink-soft);
+}
+
+.doc-sheet .doc-table tbody tr:nth-child(even) {
+  background-color: oklch(0.985 0.004 95);
+}
+
+.doc-sheet .doc-total-row {
+  background-color: oklch(0.955 0.01 165);
+}
+
+.doc-sheet .doc-stamp {
+  border: 1.5px solid var(--doc-brass);
+  color: var(--doc-brass);
+  border-radius: 0.25rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ── Print rules ─────────────────────────────────────────────────── */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+  }
+
+  /* Hide everything that is not part of the document being printed. */
+  body * {
+    visibility: hidden;
+  }
+
+  .doc-print-root,
+  .doc-print-root * {
+    visibility: visible;
+  }
+
+  .doc-print-root {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+  }
+
+  .doc-no-print {
+    display: none !important;
+  }
+
+  .doc-sheet {
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    background: #fff;
+    color: #111;
+  }
+
+  .doc-sheet .doc-table-head {
+    background-color: #f2f2f2 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .doc-sheet .doc-total-row {
+    background-color: #eef4f1 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .doc-sheet .doc-table tbody tr:nth-child(even) {
+    background-color: #fafafa !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .doc-sheet .doc-stamp {
+    border-color: #8a6a1f;
+    color: #8a6a1f;
+  }
+
+  .doc-sheet table {
+    page-break-inside: auto;
+  }
+
+  .doc-sheet tr,
+  .doc-sheet .doc-avoid-break {
+    page-break-inside: avoid;
+  }
+
+  .doc-sheet thead {
+    display: table-header-group;
+  }
+}

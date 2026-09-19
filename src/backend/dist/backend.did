@@ -1,0 +1,558 @@
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type TransferProof = 
+ record {
+   amount: Satang;
+   customerId: CustomerId;
+   customerName: text;
+   id: ProofId;
+   imageKey: text;
+   invoiceId: InvoiceId;
+   invoiceNumber: text;
+   note: text;
+   paymentId: opt PaymentId;
+   reviewNote: text;
+   reviewedAt: opt Timestamp;
+   status: ProofStatus;
+   transferredAt: Timestamp;
+   uploadedAt: Timestamp;
+ };
+type Timestamp = int;
+type ShopSettings = 
+ record {
+   accountName: text;
+   accountNumber: text;
+   address: text;
+   bankName: text;
+   defaultPaymentTermsDays: nat;
+   invoicePrefix: text;
+   phone: text;
+   promptPayRef: text;
+   receiptPrefix: text;
+   shopName: text;
+   taxId: text;
+ };
+type SettingsInput = 
+ record {
+   accountName: text;
+   accountNumber: text;
+   address: text;
+   bankName: text;
+   defaultPaymentTermsDays: nat;
+   invoicePrefix: text;
+   phone: text;
+   promptPayRef: text;
+   receiptPrefix: text;
+   shopName: text;
+   taxId: text;
+ };
+type Satang = nat;
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type ReceiptId = nat;
+type ReceiptDocument = 
+ record {
+   amount: Satang;
+   amountInWords: text;
+   customerAddress: text;
+   customerName: text;
+   header: DocumentHeader;
+   invoiceNumber: text;
+   issuedAt: Timestamp;
+   method: PaymentMethod;
+   number: text;
+   reference: text;
+ };
+type Receipt = 
+ record {
+   amount: Satang;
+   customerId: CustomerId;
+   customerName: text;
+   id: ReceiptId;
+   invoiceId: InvoiceId;
+   invoiceNumber: text;
+   issuedAt: Timestamp;
+   method: PaymentMethod;
+   number: text;
+   paidAt: Timestamp;
+   paymentId: PaymentId;
+   reference: text;
+ };
+type ProofStatus = 
+ variant {
+   approved;
+   pending;
+   rejected;
+ };
+type ProofQuery = 
+ record {
+   customerId: opt CustomerId;
+   status: opt ProofStatus;
+ };
+type ProofInput = 
+ record {
+   amount: Satang;
+   imageKey: text;
+   invoiceId: InvoiceId;
+   note: text;
+   transferredAt: Timestamp;
+ };
+type ProofId = nat;
+type ProductUpdate = 
+ record {
+   active: bool;
+   category: text;
+   name: text;
+   sku: text;
+   unit: text;
+   unitPrice: Satang;
+ };
+type ProductQuery = 
+ record {
+   activeOnly: opt bool;
+   category: opt text;
+   search: opt text;
+ };
+type ProductInput = 
+ record {
+   category: text;
+   name: text;
+   sku: text;
+   unit: text;
+   unitPrice: Satang;
+ };
+type ProductId = nat;
+type Product = 
+ record {
+   active: bool;
+   category: text;
+   createdAt: Timestamp;
+   id: ProductId;
+   name: text;
+   sku: text;
+   unit: text;
+   unitPrice: Satang;
+ };
+type PaymentStatus = 
+ variant {
+   approved;
+   pending;
+   rejected;
+ };
+type PaymentQuery = 
+ record {
+   customerId: opt CustomerId;
+   search: opt text;
+   status: opt PaymentStatus;
+ };
+type PaymentMethod = 
+ variant {
+   bankTransfer;
+   cash;
+   other;
+ };
+type PaymentInput = 
+ record {
+   amount: Satang;
+   invoiceId: InvoiceId;
+   method: PaymentMethod;
+   paidAt: Timestamp;
+   reference: text;
+ };
+type PaymentId = nat;
+type Payment = 
+ record {
+   amount: Satang;
+   createdAt: Timestamp;
+   customerId: CustomerId;
+   customerName: text;
+   id: PaymentId;
+   invoiceId: InvoiceId;
+   invoiceNumber: text;
+   method: PaymentMethod;
+   paidAt: Timestamp;
+   proofId: opt ProofId;
+   reference: text;
+   status: PaymentStatus;
+ };
+type NotificationQuery = 
+ record {
+   limit: opt nat;
+   unreadOnly: opt bool;
+ };
+type NotificationKind = 
+ variant {
+   invoiceOverdue;
+   paymentRecorded;
+   proofApproved;
+   proofRejected;
+   proofUploaded;
+ };
+type NotificationId = nat;
+type Notification = 
+ record {
+   body: text;
+   createdAt: Timestamp;
+   id: NotificationId;
+   kind: NotificationKind;
+   read: bool;
+   title: text;
+ };
+type InvoiceStatus = 
+ variant {
+   overdue;
+   paid;
+   partiallyPaid;
+   unpaid;
+ };
+type InvoiceQuery = 
+ record {
+   customerId: opt CustomerId;
+   fromDate: opt Timestamp;
+   search: opt text;
+   status: opt InvoiceStatus;
+   toDate: opt Timestamp;
+ };
+type InvoiceLineInput = 
+ record {
+   productId: ProductId;
+   quantity: nat;
+ };
+type InvoiceLine = 
+ record {
+   lineTotal: Satang;
+   productId: ProductId;
+   productName: text;
+   quantity: nat;
+   unit: text;
+   unitPrice: Satang;
+ };
+type InvoiceInput = 
+ record {
+   customerId: CustomerId;
+   dueAt: Timestamp;
+   issuedAt: Timestamp;
+   lines: vec InvoiceLineInput;
+   notes: text;
+ };
+type InvoiceId = nat;
+type InvoiceDocument = 
+ record {
+   amountInWords: text;
+   amountPaid: Satang;
+   customerAddress: text;
+   customerName: text;
+   customerPhone: text;
+   dueAt: Timestamp;
+   header: DocumentHeader;
+   issuedAt: Timestamp;
+   lines: vec DocumentLine;
+   notes: text;
+   number: text;
+   outstanding: Satang;
+   subtotal: Satang;
+   total: Satang;
+ };
+type InvoiceDetail = 
+ record {
+   invoice: Invoice;
+   payments: vec Payment;
+   proofIds: vec ProofId;
+ };
+type Invoice = 
+ record {
+   amountPaid: Satang;
+   customerId: CustomerId;
+   customerName: text;
+   dueAt: Timestamp;
+   id: InvoiceId;
+   issuedAt: Timestamp;
+   lines: vec InvoiceLine;
+   notes: text;
+   number: text;
+   outstanding: Satang;
+   status: InvoiceStatus;
+   subtotal: Satang;
+   total: Satang;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type DocumentLine = 
+ record {
+   description: text;
+   lineTotal: Satang;
+   quantity: nat;
+   unit: text;
+   unitPrice: Satang;
+ };
+type DocumentHeader = 
+ record {
+   address: text;
+   phone: text;
+   shopName: text;
+   taxId: text;
+ };
+type DebtSummary = 
+ record {
+   aging: vec AgingBucketAmount;
+   customerCount: nat;
+   totalOutstanding: Satang;
+ };
+type DebtRow = 
+ record {
+   aging: vec AgingBucketAmount;
+   customerId: CustomerId;
+   customerName: text;
+   invoiceCount: nat;
+   oldestDueAt: opt Timestamp;
+   outstandingBalance: Satang;
+   phone: text;
+ };
+type DebtNoticeDocument = 
+ record {
+   accountName: text;
+   accountNumber: text;
+   aging: vec AgingBucketAmount;
+   amountInWords: text;
+   bankName: text;
+   customerAddress: text;
+   customerName: text;
+   customerPhone: text;
+   header: DocumentHeader;
+   invoices: vec DocumentLine;
+   issuedAt: Timestamp;
+   outstandingBalance: Satang;
+   promptPayRef: text;
+ };
+type DebtDetail = 
+ record {
+   aging: vec AgingBucketAmount;
+   customerId: CustomerId;
+   customerName: text;
+   invoices: vec Invoice;
+   outstandingBalance: Satang;
+   phone: text;
+ };
+type CustomerUpdate = 
+ record {
+   active: bool;
+   address: text;
+   creditLimit: Satang;
+   name: text;
+   notes: text;
+   phone: text;
+ };
+type CustomerSummary = 
+ record {
+   active: bool;
+   address: text;
+   createdAt: Timestamp;
+   creditLimit: Satang;
+   id: CustomerId;
+   invoiceCount: nat;
+   loginPrincipal: opt principal;
+   name: text;
+   notes: text;
+   outstandingBalance: Satang;
+   phone: text;
+ };
+type CustomerQuery = 
+ record {
+   descending: opt bool;
+   search: opt text;
+   sortBy: opt text;
+ };
+type CustomerInput = 
+ record {
+   address: text;
+   creditLimit: Satang;
+   name: text;
+   notes: text;
+   phone: text;
+ };
+type CustomerId = nat;
+type CustomerDetail = 
+ record {
+   aging: vec AgingBucketAmount;
+   customer: Customer;
+   invoiceCount: nat;
+   outstandingBalance: Satang;
+   paymentCount: nat;
+ };
+type Customer = 
+ record {
+   active: bool;
+   address: text;
+   createdAt: Timestamp;
+   creditLimit: Satang;
+   id: CustomerId;
+   loginPrincipal: opt principal;
+   name: text;
+   notes: text;
+   phone: text;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type AgingBucketAmount = 
+ record {
+   amount: Satang;
+   bucket: AgingBucket;
+ };
+type AgingBucket = 
+ variant {
+   current;
+   days1to30;
+   days31to60;
+   days61to90;
+   over90;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  /// Approve a proof, creating the linked payment.
+  approveProof: (id: ProofId) -> (opt TransferProof);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  /// Bind a login principal to a customer account (manager only).
+  bindCustomerLogin: (id: CustomerId, "principal": principal) ->
+   (opt Customer);
+  /// Bind the signed-in caller's own principal to an unclaimed customer account.
+  claimCustomerAccount: (id: CustomerId) -> (opt Customer);
+  /// Count unread manager notifications.
+  countUnreadManagerNotifications: () -> (nat) query;
+  /// Count unread notifications for the signed-in customer.
+  countUnreadMyNotifications: () -> (nat) query;
+  /// Create a customer account with a provisioned login.
+  createCustomer: (input: CustomerInput) -> (Customer);
+  /// Create an invoice for a customer.
+  createInvoice: (input: InvoiceInput) -> (Invoice);
+  /// Create a product.
+  createProduct: (input: ProductInput) -> (Product);
+  /// Deactivate a product without deleting its invoice history.
+  deactivateProduct: (id: ProductId) -> (opt Product);
+  execute: (qJson: text) -> (Result) query;
+  /// Return the API documentation as Markdown.
+  getApiDoc: () -> (text) query;
+  getCallerUserRole: () -> (UserRole) query;
+  /// Fetch a customer detail view.
+  getCustomer: (id: CustomerId) -> (opt CustomerDetail) query;
+  /// Fetch one customer's debt detail.
+  getCustomerDebt: (customerId: CustomerId) -> (opt DebtDetail) query;
+  /// Build the printable debt notice document for a customer.
+  getDebtNoticeDocument: (customerId: CustomerId) ->
+   (opt DebtNoticeDocument) query;
+  /// Aggregate outstanding balance and aging across all customers.
+  getDebtSummary: () -> (DebtSummary) query;
+  /// Fetch an invoice detail view.
+  getInvoice: (id: InvoiceId) -> (opt InvoiceDetail) query;
+  /// Build the printable invoice document for an invoice.
+  getInvoiceDocument: (id: InvoiceId) -> (opt InvoiceDocument) query;
+  /// Resolve the signed-in caller's own customer account.
+  getMyCustomer: () -> (opt Customer) query;
+  /// Fetch the signed-in customer's own debt detail.
+  getMyDebt: () -> (opt DebtDetail) query;
+  /// Fetch one of the signed-in customer's own invoices.
+  getMyInvoice: (id: InvoiceId) -> (opt Invoice) query;
+  /// Fetch one of the signed-in customer's own receipts.
+  getMyReceipt: (id: ReceiptId) -> (opt Receipt) query;
+  /// Fetch a single payment.
+  getPayment: (id: PaymentId) -> (opt Payment) query;
+  /// Fetch a single product.
+  getProduct: (id: ProductId) -> (opt Product) query;
+  /// Fetch a single transfer proof.
+  getProof: (id: ProofId) -> (opt TransferProof) query;
+  /// Build the printable receipt document for a receipt.
+  getReceiptDocument: (id: ReceiptId) -> (opt ReceiptDocument) query;
+  /// Read the shop profile and bank details.
+  getSettings: () -> (ShopSettings) query;
+  isCallerAdmin: () -> (bool) query;
+  /// List customers with search and sort applied.
+  listCustomers: (filter: CustomerQuery) -> (vec CustomerSummary) query;
+  /// List every customer with an outstanding balance.
+  listDebts: () -> (vec DebtRow) query;
+  /// List invoices with search, status, and date-range filters applied.
+  listInvoices: (filter: InvoiceQuery) -> (vec Invoice) query;
+  /// List notifications for the manager.
+  listManagerNotifications: (filter: NotificationQuery) ->
+   (vec Notification) query;
+  /// List the signed-in customer's own invoices.
+  listMyInvoices: () -> (vec Invoice) query;
+  /// List notifications for the signed-in customer.
+  listMyNotifications: (filter: NotificationQuery) ->
+   (vec Notification) query;
+  /// List the signed-in customer's own payments.
+  listMyPayments: () -> (vec Payment) query;
+  /// List the signed-in customer's own receipts.
+  listMyReceipts: () -> (vec Receipt) query;
+  /// List payments with search and status filter applied.
+  listPayments: (filter: PaymentQuery) -> (vec Payment) query;
+  /// List products with search and category filter applied.
+  listProducts: (filter: ProductQuery) -> (vec Product) query;
+  /// List transfer proofs awaiting or already reviewed.
+  listProofs: (filter: ProofQuery) -> (vec TransferProof) query;
+  /// Mark every manager notification as read.
+  markAllManagerNotificationsRead: () -> (nat);
+  /// Mark every notification of the signed-in customer as read.
+  markAllMyNotificationsRead: () -> (nat);
+  /// Mark one manager notification as read.
+  markManagerNotificationRead: (id: NotificationId) -> (opt Notification);
+  /// Mark one of the signed-in customer's notifications as read.
+  markMyNotificationRead: (id: NotificationId) -> (opt Notification);
+  /// Record a manual payment against an invoice.
+  recordPayment: (input: PaymentInput) -> (Payment);
+  /// Reject a proof, leaving the invoice balance unchanged.
+  rejectProof: (id: ProofId, note: text) -> (opt TransferProof);
+  schema: () -> (text) query;
+  /// Edit an existing customer account.
+  updateCustomer: (id: CustomerId, input: CustomerUpdate) -> (opt Customer);
+  /// Edit an existing product.
+  updateProduct: (id: ProductId, input: ProductUpdate) -> (opt Product);
+  /// Update the shop profile, bank details, and numbering settings.
+  updateSettings: (input: SettingsInput) -> (ShopSettings);
+  /// Upload a bank-transfer proof against an invoice.
+  uploadProof: (input: ProofInput) -> (TransferProof);
+}
